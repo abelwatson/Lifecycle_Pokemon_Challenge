@@ -9,7 +9,23 @@ class PokeFetch extends Component {
       pokeInfo: '',
       pokeSprite: '',
       pokeName: '',
+      seconds: 10,
     }
+  }
+
+  timer() {
+    this.myInterval = setInterval(() => {
+      const { seconds } = this.state
+
+      if (seconds > 0) {
+        this.setState(({ seconds }) => ({
+          seconds: seconds - 1
+        }))
+      } if (seconds <= 0) {
+        this.setState({ seconds: "Did You Get It?" });
+        // clearInterval(this.myInterval)
+      }
+    }, 1000)
   }
 
   fetchPokemon() {
@@ -30,16 +46,38 @@ class PokeFetch extends Component {
   }
 
   render() {
-    return (
-      <div className={'wrapper'}>
-        <button className={'start'} onClick={() => this.fetchPokemon()}>Start!</button>
-        <h1 className={'timer'} >Timer Display</h1>
-        <div className={'pokeWrap'}>
-          <img className={'pokeImg'} src={this.state.pokeSprite} />
-          <h1 className={'pokeName'}>{this.state.pokeName}</h1>
+    const { seconds } = this.state;
+    
+    
+    
+    
+    
+    
+    if (seconds <= 0) {
+      return (
+        <div className={'wrapper'}>
+          <button className={'start'} onClick={() => { this.fetchPokemon(); this.timer() }
+          }>Retry?</button>
+          <h1 className={'timer'} > Did You Get It? </h1>
+          <div className={'pokeWrap'}>
+            <img className={'pokeImg'} id={'pokeReveal'} src={this.state.pokeSprite} alt="" />
+            <h1 className={'pokeName'}>{this.state.pokeName}</h1>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className={'wrapper'}>
+          <button className={'start'} onClick={() => { this.fetchPokemon(); this.timer() }
+          }>Start!</button>
+          <h1 className={'timer'} > {seconds}</h1>
+          <div className={'pokeWrap'}>
+            <img className={'pokeImg'} id={'pokeHide'} src={this.state.pokeSprite} alt="" />
+            {/* <h1 className={'pokeName'}>{this.state.pokeName}</h1> */}
+          </div>
+        </div>
+      )
+    }
   }
 }
 

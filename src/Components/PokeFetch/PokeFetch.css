@@ -38,3 +38,11 @@
   margin-top: -50px;
 }
 
+#pokeReveal {
+  filter: brightness(100%)
+}
+
+#pokeHide {
+  filter: brightness(1%)
+}
+

@@ -21,12 +21,13 @@ class PokeFetch extends Component {
         this.setState(({ seconds }) => ({
           seconds: seconds - 1
         }))
-      } if (seconds <= 0) {
+      } if (seconds === null) {
         this.setState({ seconds: "Did You Get It?" });
-        // clearInterval(this.myInterval)
       }
     }, 1000)
+    console.log(this.myInterval)
   }
+  
 
   fetchPokemon() {
     let min = Math.ceil(1);
@@ -48,15 +49,12 @@ class PokeFetch extends Component {
   render() {
     const { seconds } = this.state;
     
-    
-    
-    
-    
-    
-    if (seconds <= 0) {
+    if (seconds < 1) {
       return (
         <div className={'wrapper'}>
-          <button className={'start'} onClick={() => { this.fetchPokemon(); this.timer() }
+          <button className={'start'} onClick={() => { this.setState({seconds: 10})
+            this.fetchPokemon(); 
+        }
           }>Retry?</button>
           <h1 className={'timer'} > Did You Get It? </h1>
           <div className={'pokeWrap'}>
@@ -70,7 +68,7 @@ class PokeFetch extends Component {
         <div className={'wrapper'}>
           <button className={'start'} onClick={() => { this.fetchPokemon(); this.timer() }
           }>Start!</button>
-          <h1 className={'timer'} > {seconds}</h1>
+          <h1 className={'timer'} > Time Left:{seconds}</h1>
           <div className={'pokeWrap'}>
             <img className={'pokeImg'} id={'pokeHide'} src={this.state.pokeSprite} alt="" />
             {/* <h1 className={'pokeName'}>{this.state.pokeName}</h1> */}
